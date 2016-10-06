@@ -39,7 +39,7 @@
                     drawingControl: true,
                     drawingControlOptions: {
                         position: google.maps.ControlPosition.TOP_CENTER,
-                        drawingModes: ['circle', 'polygon', 'rectangle']
+                        drawingModes: ['circle', 'polygon'] //, 'rectangle']
                     },
                     markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
                     circleOptions: {
@@ -73,14 +73,12 @@
         drawingManager.setMap(map);
 
 
-//        draw the red triangle
         var triangleCoords = [
             {lat: 25.774, lng: -80.190},
             {lat: 18.466, lng: -66.118},
             {lat: 32.321, lng: -64.757},
             {lat: 32.321, lng: -80.757},
         ];
-
         var bermudaTriangle = new google.maps.Polygon({
             paths: triangleCoords,
             strokeColor: '#FF0000',
@@ -89,30 +87,73 @@
             fillColor: '#FF0000',
             fillOpacity: 0.1,
             clickable: false,
-            editable:true,
+            editable: true,
         });
         bermudaTriangle.setMap(map);
 
-//  events when a shape overlay is created
-        google.maps.event.addListener(drawingManager, 'overlaycomplete', function(event) {
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
             if (event.type == 'circle') {
                 var radius = event.overlay.getRadius();
+                console.log(radius);
+            } else if (event.type == 'polygon') {
+                var vertices = event.overlay.getPath();
+                var personalVertices = [];
+                for (var i = 0; i < vertices.getLength(); i++) {
+                    var xy = vertices.getAt(i);
+
+                    console.log(xy.lat() + ' , ' + xy.lng());
+                    personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
+//                    personalVertices.lat = xy.lat();
+//                    personalVertices.lng = xy.lng();
+                }
+                dots(personalVertices);
+//            } else if (event.type == 'rectangle') {
+//                vertices = event.overlay.getPath();
+//                for (var i = 0; i < vertices.getLength(); i++) {
+//                    var xy = vertices.getAt(i);
+//                    console.log(xy.lat() + ' , ' + xy.lng());
+//                }
+//                console.log('coordinates: ');
+//                console.log(personalVertices);
+//                console.log('fine coordinates ');
+
             }
         });
 
+        function dots(personalVertices) {
+            google.maps.event.addListener(map, 'click', function (e) {
+                var personalShape = new google.maps.Polygon({paths: personalVertices});
+                var resultColor =
+                        google.maps.geometry.poly.containsLocation(e.latLng, personalShape) ?
+                                'red' :
+                                'green';
 
-        var vertices = bermudaTriangle.getPath();
-//        var vertices = drawingManager.getPath();
-        for (var i = 0; i < vertices.getLength(); i++) {
-            var xy = vertices.getAt(i);
-            console.log(xy.lat()+' , '+xy.lng());
+                new google.maps.Marker({
+                    position: e.latLng,
+                    map: map,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillColor: resultColor,
+                        fillOpacity: .5,
+                        strokeColor: 'white',
+                        strokeWeight: .5,
+                        scale: 10,
+                        zIndex: 1
+                    }
+                });
+            });
         }
 
-        console.log(drawingManager);
-        console.log(bermudaTriangle);
-        console.log(bermudaTriangle.paths);
 
-        document.getElementById('array').innerHTML = bermudaTriangle.paths;
+        var vertices = bermudaTriangle.getPath();
+        for (var i = 0; i < vertices.getLength(); i++) {
+            var xy = vertices.getAt(i);
+            console.log(xy.lat() + ' , ' + xy.lng());
+        }
+
+//        console.log(drawingManager);
+//        console.log(bermudaTriangle);
+//        console.log(bermudaTriangle.paths);
 
 //        var bermudaTriangle = new google.maps.Polygon({paths: triangleCoords});
 
@@ -120,8 +161,8 @@
 
             var resultColor =
                     google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle) ?
-                            'red' :
-                            'green';
+                            'orange' :
+                            'blue';
 
             new google.maps.Marker({
                 position: e.latLng,

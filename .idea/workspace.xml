@@ -20,15 +20,17 @@
     <favorites_list name="22group" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.61796874">
+    <splitter split-orientation="horizontal" split-proportion="0.653125">
       <split-first>
         <leaf>
           <file leaf-file-name="Polygons.html" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="482">
-                  <caret line="69" column="17" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
-                  <folding />
+                <state relative-caret-position="308">
+                  <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
+                  <folding>
+                    <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -37,11 +39,11 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="Curl.php" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/GoogleAPI/Classes/Curl.php">
+          <file leaf-file-name="contains.html" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/contains.html">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="546">
-                  <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+                <state relative-caret-position="167">
+                  <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="18" selection-end-column="20" />
                   <folding />
                 </state>
               </provider>
@@ -71,6 +73,7 @@
         <option value="$PROJECT_DIR$/GoogleAPI/examples/places.html" />
         <option value="$PROJECT_DIR$/GoogleAPI/index.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/Classes/Curl.php" />
+        <option value="$PROJECT_DIR$/GoogleAPI/examples/contains.html" />
         <option value="$PROJECT_DIR$/GoogleAPI/examples/Polygons.html" />
       </list>
     </option>
@@ -123,6 +126,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="js-jscs-nodeInterpreter" value="/usr/local/bin/node" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="ignore_missing_gitignore" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -182,12 +186,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1475675163315</updated>
-      <workItem from="1475675165454" duration="15963000" />
+      <workItem from="1475675165454" duration="21090000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15963000" />
+    <option name="totallyTimeSpent" value="21090000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
@@ -315,15 +319,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="546">
           <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding>
+            <marker date="1475752026000" expanded="true" signature="44:427" placeholder="{...}" />
+            <marker date="1475752026000" expanded="true" signature="107:347" placeholder="{...}" />
+            <marker date="1475752026000" expanded="true" signature="385:422" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/contains.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="18" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="69" column="17" selection-start-line="69" selection-start-column="17" selection-end-line="69" selection-end-column="17" />
-          <folding />
+        <state relative-caret-position="308">
+          <caret line="96" column="4" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="4" />
+          <folding>
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

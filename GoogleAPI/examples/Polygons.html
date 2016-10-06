@@ -17,107 +17,95 @@
     </style>
 </head>
 <body>
-<div id="array">a</div>
-<div id="array2" onclick="">b</div>
+<div id="array" onclick="remove()">remove</div>
+<div id="array2" onclick="initMap()">initMap</div>
 
 <div id="map" style="max-width:700px;max-height:400px;"></div>
 
 <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLny4Q7L4wBTjw4FQcygnpnM7-1TLbYyM&libraries=drawing"></script>-->
 <script>
 
+    var markers = [];
+    var shapes = [];
+    var personalVertices = [];
+
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 24.886, lng: -70.269},
             zoom: 5
         });
+
         var sColor = '#6080a0';
         var fColor = '#6080a0';
-        var fOpacity = 0.4;
+        var fOpacity = 0;
         var sWeight = 2;
         var drawingManager = new google.maps.drawing.DrawingManager({
-                    drawingMode: google.maps.drawing.OverlayType.FALSE,
-                    drawingControl: true,
-                    drawingControlOptions: {
-                        position: google.maps.ControlPosition.TOP_CENTER,
-                        drawingModes: ['circle', 'polygon'] //, 'rectangle']
-                    },
-                    markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-                    circleOptions: {
-                        fillColor: fColor,
-                        fillOpacity: fOpacity,
-                        strokeWeight: sWeight,
-                        strokeColor: sColor,
-                        clickable: false,
-                        editable: false,
-                        zIndex: 1
-                    },
-                    polygonOptions: {
-                        strokeColor: sColor,
-                        fillColor: fColor,
-                        fillOpacity: fOpacity,
-                        strokeWeight: sWeight,
-                        clickable: false,
-                        editable: false,
-                        zIndex:0,
-                    },
-                    rectangleOptions: {
-                        strokeColor: sColor,
-                        fillColor: fColor,
-                        fillOpacity: fOpacity,
-                        strokeWeight: sWeight,
-                        clickable: true,
-                        editable: true,
-                    }
-                })
-                ;
+            drawingMode: google.maps.drawing.OverlayType.FALSE,
+            drawingControl: true,
+            drawingControlOptions: {
+                position: google.maps.ControlPosition.TOP_CENTER,
+                drawingModes: ['circle', 'polygon']
+            },
+            circleOptions: {
+                fillColor: fColor,
+                fillOpacity: fOpacity,
+                strokeWeight: sWeight,
+                strokeColor: sColor,
+                clickable: false,
+                editable: false,
+                zIndex: 1
+            },
+            polygonOptions: {
+                strokeColor: sColor,
+                fillColor: fColor,
+                fillOpacity: fOpacity,
+                strokeWeight: sWeight,
+                clickable: false,
+                editable: false,
+                zIndex: 0,
+            },
+
+        });
 
         drawingManager.setMap(map);
 
-
-
-        var markers = [];
-        var shapes = [];
-
-
-
-        var triangleCoords = [
-            {lat: 25.774, lng: -80.190},
-            {lat: 18.466, lng: -66.118},
-            {lat: 32.321, lng: -64.757},
-            {lat: 32.321, lng: -80.757},
-        ];
-        var bermudaTriangle = new google.maps.Polygon({
-            paths: triangleCoords,
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#000000',
-            fillOpacity: 0.1,
-            clickable: false,
-            editable: true,
-        });
-        bermudaTriangle.setMap(map);
-        shapes.push(bermudaTriangle);
+//        var triangleCoords = [
+//            {lat: 25.774, lng: -80.190},
+//            {lat: 18.466, lng: -66.118},
+//            {lat: 32.321, lng: -64.757},
+//            {lat: 32.321, lng: -80.757},
+//        ];
+//        var bermudaTriangle = new google.maps.Polygon({
+//            paths: triangleCoords,
+//            strokeColor: '#FF0000',
+//            strokeOpacity: 0.8,
+//            strokeWeight: 2,
+//            fillColor: '#000000',
+//            fillOpacity: 0.1,
+//            clickable: false,
+//            editable: true,
+//        });
+//        bermudaTriangle.setMap(map);
+//        shapes.push(bermudaTriangle);
 
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
-            if (event.type == 'circle') {
-                var radius = event.overlay.getRadius();
-                console.log(radius);
-            } else if (event.type == 'polygon') {
-//              remove all the previous markers
                 remove();
+
+            if (event.type == 'polygon') {
+//              Remove all the previous markers and shapes
+//              Add the shape to the array
+                shapes.push(event.overlay);
+
                 var vertices = event.overlay.getPath();
-                var personalVertices = [];
                 for (var i = 0; i < vertices.getLength(); i++) {
                     var xy = vertices.getAt(i);
-
-//                    console.log(xy.lat() + ' , ' + xy.lng());
                     personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
-//                    personalVertices.lat = xy.lat();
-//                    personalVertices.lng = xy.lng();
                 }
-//                CALL THE FUNCTION TO CREATE VERTICES
-                dots(personalVertices);
+
+//                CALL THE FUNCTION TO CHECK IF DOTS ARE INSIDE THE VERTICES
+                var personalShape = new google.maps.Polygon({paths: personalVertices});
+                dots(personalShape);
+
 //            } else if (event.type == 'rectangle') {
 //                vertices = event.overlay.getPath();
 //                for (var i = 0; i < vertices.getLength(); i++) {
@@ -131,15 +119,13 @@
             }
         });
 
-        function dots(personalVertices) {
+        function dots(shape) {
             google.maps.event.addListener(map, 'click', function (e) {
-                var personalShape = new google.maps.Polygon({paths: personalVertices});
-                shapes.push(personalShape);
 
                 var resultColor =
-                        google.maps.geometry.poly.containsLocation(e.latLng, personalShape) ?
-                                'red' :
-                                'green';
+                        google.maps.geometry.poly.containsLocation(e.latLng, shape) ?
+                                '#f00' :
+                                '#0f0';
 
                 var marker = new google.maps.Marker({
                     position: e.latLng,
@@ -147,66 +133,75 @@
                     icon: {
                         path: google.maps.SymbolPath.CIRCLE,
                         fillColor: resultColor,
-                        fillOpacity: .5,
+                        fillOpacity: 0.3,
                         strokeColor: 'white',
                         strokeWeight: .5,
                         scale: 10,
-                        zIndex:1,
+                        zIndex: 1,
                     }
                 });
                 markers.push(marker);
 
             });
         }
+    }
 
-
-        var vertices = bermudaTriangle.getPath();
-        for (var i = 0; i < vertices.getLength(); i++) {
-            var xy = vertices.getAt(i);
-        }
-
-        google.maps.event.addListener(map, 'click', function (e) {
-
-            var resultColor =
-                    google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle) ?
-                            'red' :
-                            'green';
-
-
-            var marker = new google.maps.Marker({
-                position: e.latLng,
-                map: map,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillColor: resultColor,
-                    fillOpacity: 1,
-                    strokeColor: 'white',
-                    strokeWeight: 0.2,
-                    scale: 10,
-                    zIndex: 1,
-                }
-            });
-            markers.push(marker);
-
-        });
-
-
-    var remove = function(){
-        console.log(markers);
+    var remove = function () {
+//            console.log('markers');
+//            console.log(markers);
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
 //            console.log(markers[i]);
         }
-        markers = [];
-        console.log(markers);
-//        bermudaTriangle.setMap(null);
+
         for (var i = 0; i < shapes.length; i++) {
             shapes[i].setMap(null);
         }
+//        bermudaTriangle.setMap(null);
 
+//            console.log('markers after remove');
+            console.log(markers);
+//            console.log('shapes');
+            console.log(shapes);
+//            console.log('personal vertices');
+            console.log(personalVertices);
+
+        markers = [];
+        shapes = [];
+        personalVertices = [];
     }
 
-    }
+
+    //        var vertices = bermudaTriangle.getPath();
+    //        for (var i = 0; i < vertices.getLength(); i++) {
+    //            var xy = vertices.getAt(i);
+    //        }
+
+    //        google.maps.event.addListener(map, 'click', function (e) {
+    //
+    //            var resultColor =
+    //                    google.maps.geometry.poly.containsLocation(e.latLng, bermudaTriangle) ?
+    //                            'red' :
+    //                            'green';
+    //
+    //
+    //            var marker = new google.maps.Marker({
+    //                position: e.latLng,
+    //                map: map,
+    //                icon: {
+    //                    path: google.maps.SymbolPath.CIRCLE,
+    //                    fillColor: resultColor,
+    //                    fillOpacity: 1,
+    //                    strokeColor: 'white',
+    //                    strokeWeight: 0.2,
+    //                    scale: 10,
+    //                    zIndex: 1,
+    //                }
+    //            });
+    //            markers.push(marker);
+    //
+    //        });
+
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeigJ0MtRTk-X-plGt4BDf_1QiSCMh91Q&libraries=drawing&callback=initMap"

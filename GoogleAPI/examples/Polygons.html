@@ -46,7 +46,7 @@
             drawingControl: true,
             drawingControlOptions: {
                 position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: ['circle', 'polygon']
+                drawingModes: ['polygon']
             },
             circleOptions: {
                 fillColor: fColor,
@@ -100,11 +100,8 @@
 
                 var resultColor =
                         google.maps.geometry.poly.containsLocation(e.latLng, shape) ?
-                                '#f00' :
-                                '#0f0';
-
-                google.maps.geometry.poly.containsLocation(e.latLng, shape) ?
-                console.log('inside'):console.log('out');
+                                '#22d' :
+                                '#2d2';
 
                 var marker = new google.maps.Marker({
                     position: e.latLng,

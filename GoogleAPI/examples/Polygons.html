@@ -4,6 +4,9 @@
     <title>Drawing tools</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
     <style>
         html, body {
             height: 100%;
@@ -15,36 +18,17 @@
             height: 100%;
         }
     </style>
-
-    <script type="text/javascript">
-        //        var esito = [];
-        //        function check() {
-        //            var server = '../database.php';
-        //            richiesta = new XMLHttpRequest();
-        //            richiesta.onreadystatechange = asynchronousUpdate;
-        //            richiesta.open("POST", server, true);
-        //            richiesta.send(null);
-        //        }
-        //        function asynchronousUpdate() {
-        //            if ((richiesta.readyState == 4) &&
-        //                    (richiesta.status == 200)) {
-        //                housesList = richiesta.responseText;
-        ////                esito = JSON.parse(housesList);
-        ////                document.getElementById("result").innerHTML = esito;
-        //            }
-        //        }
-    </script>
-
 </head>
 <body>
-<input type="button" id="check" name="check" value="check">
-<!--<input type="submit" onclick="check()" value="check">-->
-<div id="result"></div>
-<div id="description">description</div>
-
 <div id="array" onclick="remove();">remove</div>
 <div id="array2" onclick="initMap();">initMap</div>
-<div id="map" style="max-width:700px;max-height:400px;"></div>
+<br>
+<div class="col-md-6" id="map" style="max-width:700px;max-height:400px;"></div>
+<div class="col-md-3">
+    <ul id="postcode">
+        <li></li>
+    </ul>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
         crossorigin="anonymous"></script>
@@ -57,10 +41,9 @@
 
     function initMap() {
 
-
         var map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: 53.482478, lng: -2.232023},
-            zoom: 16
+            zoom: 15
         });
 
         var sColor = '#6080a0';
@@ -68,7 +51,7 @@
         var fOpacity = 0;
         var sWeight = 2;
         var drawingManager = new google.maps.drawing.DrawingManager({
-            drawingMode: google.maps.drawing.OverlayType.FALSE,
+            drawingMode: google.maps.drawing.OverlayType.POLYGON,
             drawingControl: true,
             drawingControlOptions: {
                 position: google.maps.ControlPosition.TOP_CENTER,
@@ -125,20 +108,26 @@
 
 
         function dots(shape) {
-
+//foreach house in the array
             for (var i = 0; i < properties.length; i++) {
-//                console.log(properties[i].split(','));
 //                console.log(properties[i].split(',')[0]);
 //                console.log(properties[i].split(',')[1]);
-//                var newLatLng = properties[i];
-//                var myLatLng = {lat: 53.483072, lng: -2.233058};
-                
+
+//                create the coordinates object
                 var newLatLng = new google.maps.LatLng(properties[i].split(',')[0], properties[i].split(',')[1]);
-//                var newLatLng = new google.maps.LatLng(myLatLng.lat, myLatLng.lng);
-                var resultOpacity =
-                        google.maps.geometry.poly.containsLocation(newLatLng, shape) ?
-                                1 :
-                                0.2;
+//                var resultOpacity = google.maps.geometry.poly.containsLocation(newLatLng, shape) ? 1 : 0.01;
+                if (google.maps.geometry.poly.containsLocation(newLatLng, shape)) {
+//                    write the postcode of the visible houses
+                    document.getElementById("postcode").appendChild
+                    var node = document.createElement('li');
+                    var postcode = document.createTextNode(properties[i].split(',')[2]);
+                    node.appendChild(postcode);
+                    document.getElementById("postcode").appendChild(node);
+
+                    var resultOpacity = 1;
+                } else {
+                    var resultOpacity = 0.01;
+                }
 
 //                Draws the dots over the houses
                 var house = new google.maps.Marker({
@@ -151,13 +140,13 @@
                         strokeColor: 'white',
                         strokeWeight: .5,
                         scale: 10,
+                        clickable: false,
                         zIndex: 1,
                     }
                 });
                 markers.push(house);
             }
 
-//            });
         }
     }
 
@@ -171,23 +160,31 @@
         }
         markers.length = 0;
         shapes.length = 0;
+//        console.clear();
+//        remove the postcodes from the list
+        var pc = document.getElementById('postcode');
+        while (pc.firstChild) {
+            pc.removeChild(pc.firstChild);
+        }
+
     }
+
 
     //jquery db function
     $(document).ready(function () {
         properties = new Array();
-
-        $("#check").click(function () {
-            $.ajax({
-                url: "../database.php",
-                type: "POST",
-                success: function (msg) {
-                    properties = msg;
-                },
-                dataType: "json"
-            });
-
+//retrieve the data from the database
+//        $("#check").click(function () {
+        $.ajax({
+            url: "../database.php",
+            type: "POST",
+            success: function (msg) {
+                properties = msg;
+            },
+            dataType: "json"
         });
+
+//        });
     });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeigJ0MtRTk-X-plGt4BDf_1QiSCMh91Q&libraries=drawing&callback=initMap"

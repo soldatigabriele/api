@@ -8,7 +8,7 @@ $houses = $dbh->query('houses');
 $results = $dbh->results();
 $count= $dbh->count();
 for ($i = 0; $i<$count; $i++){
-    $house = $results[$i]->lat.', '.$results[$i]->lng;
+    $house = $results[$i]->lat.', '.$results[$i]->lng.', '.$results[$i]->postCode;
     $properties[] = $house;
 }
 //return the array with the coordinates of the properties

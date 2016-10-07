@@ -2,7 +2,7 @@
 //DISTANCE API
 
 include_once '../Classes/Curl.php';
-use curl\connect as Curl;
+use connect as Curl;
 
 
 echo ' <form action="../" method="post"><input type="submit" value="Go Back"></form> ';

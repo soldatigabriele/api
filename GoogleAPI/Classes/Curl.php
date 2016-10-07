@@ -1,7 +1,7 @@
 <?php
 
 
-namespace curl\connect;
+namespace connect;
 
 
 class Curl

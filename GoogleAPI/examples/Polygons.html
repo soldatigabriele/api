@@ -13,7 +13,9 @@
             margin: 0;
             padding: 0;
         }
-
+        li{
+            list-style-type: square;
+        }
         #map {
             height: 100%;
         }
@@ -26,7 +28,6 @@
 <div class="col-md-6" id="map" style="max-width:700px;max-height:400px;"></div>
 <div class="col-md-3">
     <ul id="postcode">
-        <li></li>
     </ul>
 </div>
 
@@ -125,26 +126,25 @@
                     document.getElementById("postcode").appendChild(node);
 
                     var resultOpacity = 1;
-                } else {
-                    var resultOpacity = 0.01;
-                }
-
 //                Draws the dots over the houses
                 var house = new google.maps.Marker({
                     position: newLatLng,
                     map: map,
-                    title: 'Hello World!',
                     icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
+                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
                         fillOpacity: resultOpacity,
-                        strokeColor: 'white',
-                        strokeWeight: .5,
-                        scale: 10,
+                        fillColor:'#0086b3',
+                        strokeColor: '#0086b3',
+                        strokeWeight: 2,
+                        scale: 4,
                         clickable: false,
                         zIndex: 1,
                     }
                 });
                 markers.push(house);
+                } else {
+//                    var resultOpacity = 0.01;
+                }
             }
 
         }

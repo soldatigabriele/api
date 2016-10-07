@@ -17,14 +17,15 @@
     </style>
 
     <script type="text/javascript">
-        function spedisci() {
+        var esito = [];
+        function check() {
             var server = '../database.php';
             richiesta = new XMLHttpRequest();
             richiesta.onreadystatechange = asynchronousUpdate;
             richiesta.open("POST", server, true);
             richiesta.send(null);
         }
-        function asynchronousUpdate(){
+        function asynchronousUpdate() {
             if ((richiesta.readyState == 4) &&
                     (richiesta.status == 200)) {
                 esito = richiesta.responseText;
@@ -35,12 +36,12 @@
 
 </head>
 <body>
-<input type="submit" onclick="spedisci()" value="sendRequest" >
+<input type="submit" onclick="check()" value="check">
 <div id="result" onclick=></div>
 
-<!--<div id="array" onclick="remove();">remove</div>-->
-<!--<div id="array2" onclick="initMap();">initMap</div>-->
-<!--<div id="map" style="max-width:700px;max-height:400px;"></div>-->
+<div id="array" onclick="remove();">remove</div>
+<div id="array2" onclick="initMap();">initMap</div>
+<div id="map" style="max-width:700px;max-height:400px;"></div>
 
 <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
         crossorigin="anonymous"></script>
@@ -93,6 +94,7 @@
 
         drawingManager.setMap(map);
 
+// launch this function when a shape is drawn
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
             google.maps.event.clearListeners(map, 'click');
 
@@ -109,38 +111,47 @@
                     personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
                 }
 
+
+
 //                CALL THE FUNCTION TO CHECK IF DOTS ARE INSIDE THE VERTICES
                 var personalShape = new google.maps.Polygon({paths: personalVertices});
                 dots(personalShape);
-
             }
         });
 
+//        draw the marker over the house
+
+
         function dots(shape) {
 
-            google.maps.event.addListener(map, 'click', function (e) {
+//            for(var i = 0; i < houses.length; i++){
 
-                var resultColor =
-                        google.maps.geometry.poly.containsLocation(e.latLng, shape) ?
-                                '#22d' :
-                                '#2d2';
+//            }
 
-                var marker = new google.maps.Marker({
-                    position: e.latLng,
-                    map: map,
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        fillColor: resultColor,
-                        fillOpacity: 1,
-                        strokeColor: 'white',
-                        strokeWeight: .5,
-                        scale: 10,
-                        zIndex: 1,
-                    }
-                });
+            var myLatLng = {lat: 53.483072, lng: -2.233058};
+            var newLatLng = new google.maps.LatLng(myLatLng.lat, myLatLng.lng);
+            var resultOpacity =
+                    google.maps.geometry.poly.containsLocation(newLatLng, shape) ?
+                            1 :
+                            0.2;
 
-                markers.push(marker);
+//                Draws the dots over the houses
+            var house = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                title: 'Hello World!',
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    fillOpacity: resultOpacity,
+                    strokeColor: 'white',
+                    strokeWeight: .5,
+                    scale: 10,
+                    zIndex: 1,
+                }
             });
+            markers.push(house);
+
+//            });
         }
     }
 
@@ -157,13 +168,13 @@
     }
 
     //jquery db function
-//    $(document).ready(function () {
-//        var url = '../database.php';
-//        $.post(url, formdataobject, function (resp) {
-//            $("a.youra").text('edit').attr('href', resp);
-//        });
+    //    $(document).ready(function () {
+    //        var url = '../database.php';
+    //        $.post(url, formdataobject, function (resp) {
+    //            $("a.youra").text('edit').attr('href', resp);
+    //        });
 
-//    });
+    //    });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeigJ0MtRTk-X-plGt4BDf_1QiSCMh91Q&libraries=drawing&callback=initMap"
         async defer></script>

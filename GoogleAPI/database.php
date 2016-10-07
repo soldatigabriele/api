@@ -12,7 +12,8 @@ for ($i = 0; $i<$count; $i++){
     $properties[] = $house;
 }
 //return the array with the coordinates of the properties
-print_r($properties);
+echo json_encode($properties);
+
 
 
 

@@ -17,27 +17,30 @@
     </style>
 
     <script type="text/javascript">
-        var esito = [];
-        function check() {
-            var server = '../database.php';
-            richiesta = new XMLHttpRequest();
-            richiesta.onreadystatechange = asynchronousUpdate;
-            richiesta.open("POST", server, true);
-            richiesta.send(null);
-        }
-        function asynchronousUpdate() {
-            if ((richiesta.readyState == 4) &&
-                    (richiesta.status == 200)) {
-                esito = richiesta.responseText;
-                document.getElementById("result").innerHTML = esito;
-            }
-        }
+        //        var esito = [];
+        //        function check() {
+        //            var server = '../database.php';
+        //            richiesta = new XMLHttpRequest();
+        //            richiesta.onreadystatechange = asynchronousUpdate;
+        //            richiesta.open("POST", server, true);
+        //            richiesta.send(null);
+        //        }
+        //        function asynchronousUpdate() {
+        //            if ((richiesta.readyState == 4) &&
+        //                    (richiesta.status == 200)) {
+        //                housesList = richiesta.responseText;
+        ////                esito = JSON.parse(housesList);
+        ////                document.getElementById("result").innerHTML = esito;
+        //            }
+        //        }
     </script>
 
 </head>
 <body>
-<input type="submit" onclick="check()" value="check">
-<div id="result" onclick=></div>
+<input type="button" id="check" name="check" value="check">
+<!--<input type="submit" onclick="check()" value="check">-->
+<div id="result"></div>
+<div id="description">description</div>
 
 <div id="array" onclick="remove();">remove</div>
 <div id="array2" onclick="initMap();">initMap</div>
@@ -112,7 +115,6 @@
                 }
 
 
-
 //                CALL THE FUNCTION TO CHECK IF DOTS ARE INSIDE THE VERTICES
                 var personalShape = new google.maps.Polygon({paths: personalVertices});
                 dots(personalShape);
@@ -124,32 +126,36 @@
 
         function dots(shape) {
 
-//            for(var i = 0; i < houses.length; i++){
-
-//            }
-
-            var myLatLng = {lat: 53.483072, lng: -2.233058};
-            var newLatLng = new google.maps.LatLng(myLatLng.lat, myLatLng.lng);
-            var resultOpacity =
-                    google.maps.geometry.poly.containsLocation(newLatLng, shape) ?
-                            1 :
-                            0.2;
+            for (var i = 0; i < properties.length; i++) {
+//                console.log(properties[i].split(','));
+//                console.log(properties[i].split(',')[0]);
+//                console.log(properties[i].split(',')[1]);
+//                var newLatLng = properties[i];
+//                var myLatLng = {lat: 53.483072, lng: -2.233058};
+                
+                var newLatLng = new google.maps.LatLng(properties[i].split(',')[0], properties[i].split(',')[1]);
+//                var newLatLng = new google.maps.LatLng(myLatLng.lat, myLatLng.lng);
+                var resultOpacity =
+                        google.maps.geometry.poly.containsLocation(newLatLng, shape) ?
+                                1 :
+                                0.2;
 
 //                Draws the dots over the houses
-            var house = new google.maps.Marker({
-                position: myLatLng,
-                map: map,
-                title: 'Hello World!',
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    fillOpacity: resultOpacity,
-                    strokeColor: 'white',
-                    strokeWeight: .5,
-                    scale: 10,
-                    zIndex: 1,
-                }
-            });
-            markers.push(house);
+                var house = new google.maps.Marker({
+                    position: newLatLng,
+                    map: map,
+                    title: 'Hello World!',
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        fillOpacity: resultOpacity,
+                        strokeColor: 'white',
+                        strokeWeight: .5,
+                        scale: 10,
+                        zIndex: 1,
+                    }
+                });
+                markers.push(house);
+            }
 
 //            });
         }
@@ -168,13 +174,21 @@
     }
 
     //jquery db function
-    //    $(document).ready(function () {
-    //        var url = '../database.php';
-    //        $.post(url, formdataobject, function (resp) {
-    //            $("a.youra").text('edit').attr('href', resp);
-    //        });
+    $(document).ready(function () {
+        properties = new Array();
 
-    //    });
+        $("#check").click(function () {
+            $.ajax({
+                url: "../database.php",
+                type: "POST",
+                success: function (msg) {
+                    properties = msg;
+                },
+                dataType: "json"
+            });
+
+        });
+    });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeigJ0MtRTk-X-plGt4BDf_1QiSCMh91Q&libraries=drawing&callback=initMap"
         async defer></script>

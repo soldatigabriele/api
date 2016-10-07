@@ -28,7 +28,6 @@
     var markers = [];
     var shapes = [];
     var personalVertices = [];
-    var personalShape = {};
 
     function initMap() {
 
@@ -73,6 +72,7 @@
         drawingManager.setMap(map);
 
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+            google.maps.event.clearListeners(map, 'click');
 
             remove();
 
@@ -88,7 +88,7 @@
                 }
 
 //                CALL THE FUNCTION TO CHECK IF DOTS ARE INSIDE THE VERTICES
-                personalShape = new google.maps.Polygon({paths: personalVertices});
+                var personalShape = new google.maps.Polygon({paths: personalVertices});
                 dots(personalShape);
 
             }
@@ -128,27 +128,13 @@
     var remove = function () {
         for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
-            console.log(markers[i]);
         }
 
         for (var i = 0; i < shapes.length; i++) {
             shapes[i].setMap(null);
         }
-//        bermudaTriangle.setMap(null);
-
-
-        console.log('markers');
-//        console.log(markers);
         markers.length = 0;
-        console.log(markers);
-//        console.log('shapes');
-//        console.log(shapes);
-//        shapes.length = 0;
-//        console.log(shapes);
-//        console.log('personal vertices');
-//        console.log(personalVertices);
-//        personalVertices.length = 0;
-//        console.log(personalVertices);
+        shapes.length = 0;
     }
 
 </script>

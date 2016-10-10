@@ -1,11 +1,17 @@
 <?php
-define('FOLDER','examples/');
+define('FOLDER', 'examples/');
 ?>
 <!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Google Maps APIs</title>
+    <style>
+        a {
+            display: block;
+            padding:5px;
+        }
+    </style>
 </head>
 <body>
 

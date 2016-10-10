@@ -1,50 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Places</title>
-</head>
-<body>
-<form action="../index.php" method="post"><input type="submit" value="Back"></form>
-
-<!--<h2>Google Places</h2>-->
-<!--<form action="" method="post">-->
-<!--<input type="text" id="search" name="search">-->
-<!--<input type="button" onclick="remove(); query(document.getElementById('search').value);" value="Perform Search"><br><hr>-->
-<!--<input type="radio" value="primary school" name="remove" onclick="remove(); query(this.value);">primary school<br>-->
-<!--<input type="radio" value="secondary school" name="remove" onclick="remove(); query(this.value);">secondary school<br>-->
-<!--<input type="radio" value="college" name="remove" onclick="remove(); query(this.value);">college<br>-->
-<!--<input type="radio" value="university" name="remove" onclick="remove(); query(this.value);">university<br>-->
-<!--<input type="radio" value="library" name="remove" onclick="remove(); query(this.value);">library<br>-->
-<!--<input type="radio" value="train station" name="remove" onclick="remove(); query(this.value);">train station<br>-->
-<!--<input type="radio" value="NHS" name="remove" onclick="remove(); query(this.value);">NHS<br>-->
-<!--<input type="radio" value="public hospital" name="remove" onclick="remove(); query(this.value);">healthcare<br>-->
-<!--<input type="radio" value="clinics" name="remove" onclick="remove(); query(this.value);">clinics<br>-->
-<!--</form>-->
-<!--<input type="text" id="search" name="search">-->
-<!--<input type="button" onclick="remove(); queryCheck(document.getElementById('search').value);" value="Perform Search"><br>-->
-<form action="" method="post">
-    <hr>
-    <input type="checkbox" value="primary school" name="remove" onclick="remove(); queryCheck(this);">primary school<br>
-    <input type="checkbox" value="secondary school" name="remove" onclick="remove(); queryCheck(this);">secondary school<br>
-    <input type="checkbox" value="college" name="remove" onclick="remove(); queryCheck(this);">college<br>
-    <input type="checkbox" value="university" name="remove" onclick="remove(); queryCheck(this);">university<br>
-    <input type="checkbox" value="library" name="remove" onclick="remove(); queryCheck(this);">library<br>
-    <input type="checkbox" value="train station" name="remove" onclick="queryCheck(this);">train station<br>
-    <input type="checkbox" value="NHS" name="remove" onclick="queryCheck(this);">NHS<br>
-    <input type="checkbox" value="public hospital" name="remove" onclick="remove(); queryCheck(this);">healthcare<br>
-    <input type="checkbox" value="clinics" name="remove" onclick="remove(); queryCheck(this);">clinics<br>
-</form>
-<br>
-</body>
-</html>
-
-
-<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Search for up to 200 places with Radar Search</title>
+    <title>Radar Search</title>
     <style>
         html, body {
             height: 100%;
@@ -172,6 +130,22 @@
     </script>
 </head>
 <body>
+<form action="../index.php" method="post"><input type="submit" value="Back"></form>
+
+<h2>Google Places</h2>
+<form action="" method="post">
+    <hr>
+    <input type="checkbox" value="primary school" name="remove" onclick="queryCheck(this);">primary school<br>
+    <input type="checkbox" value="secondary school" name="remove" onclick="queryCheck(this);">secondary school<br>
+    <input type="checkbox" value="college" name="remove" onclick="queryCheck(this);">college<br>
+    <input type="checkbox" value="university" name="remove" onclick="queryCheck(this);">university<br>
+    <input type="checkbox" value="library" name="remove" onclick="queryCheck(this);">library<br>
+    <input type="checkbox" value="train station" name="remove" onclick="queryCheck(this);">train station<br>
+    <input type="checkbox" value="NHS" name="remove" onclick="queryCheck(this);">NHS<br>
+    <input type="checkbox" value="public hospital" name="remove" onclick="queryCheck(this);">healthcare<br>
+    <input type="checkbox" value="clinics" name="remove" onclick="queryCheck(this);">clinics<br>
+</form>
+<br>
 <div id="map"></div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACjsYdnvLjrfMIGq4gqfOlcvMCrocFfIU&callback=initMap&libraries=places,visualization"
         async defer></script>

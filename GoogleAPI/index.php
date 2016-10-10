@@ -19,7 +19,7 @@ define('FOLDER', 'examples/');
 </head>
 <body>
 
-<a href="<?php echo FOLDER; ?>JavascriptMap.html">A static <strong>Javascript Map</strong></a>
+<a href="<?php echo FOLDER; ?>JavascriptMap.php">A static <strong>Javascript Map</strong></a>
 <a href="<?php echo FOLDER; ?>distance.php">Find the <strong>Distance</strong> between two places</a>
 <a href="<?php echo FOLDER; ?>geocoding.php"><strong>Geocoding</strong>: find an address or the coordinates of a certain place</a>
 <a href="<?php echo FOLDER; ?>places.php">Find <strong>Places</strong> near your place</a>

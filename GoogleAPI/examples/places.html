@@ -24,16 +24,16 @@
 <!--<input type="text" id="search" name="search">-->
 <!--<input type="button" onclick="remove(); queryCheck(document.getElementById('search').value);" value="Perform Search"><br>-->
 <form action="" method="post">
-    <!--<hr>-->
-    <!--<input type="checkbox" value="primary school" name="remove" onclick="remove(); queryCheck(this);">primary school<br>-->
-    <!--<input type="checkbox" value="secondary school" name="remove" onclick="remove(); queryCheck(this);">secondary school<br>-->
-    <!--<input type="checkbox" value="college" name="remove" onclick="remove(); queryCheck(this);">college<br>-->
-    <!--<input type="checkbox" value="university" name="remove" onclick="remove(); queryCheck(this);">university<br>-->
-    <!--<input type="checkbox" value="library" name="remove" onclick="remove(); queryCheck(this);">library<br>-->
-    <input type="checkbox" value="train station" name="remove" onclick="remove(); queryCheck(this);">train station<br>
-    <input type="checkbox" value="NHS" name="remove" onclick="remove(); queryCheck(this);">NHS<br>
-    <!--<input type="checkbox" value="public hospital" name="remove" onclick="remove(); queryCheck(this);">healthcare<br>-->
-    <!--<input type="checkbox" value="clinics" name="remove" onclick="remove(); queryCheck(this);">clinics<br>-->
+    <hr>
+    <input type="checkbox" value="primary school" name="remove" onclick="remove(); queryCheck(this);">primary school<br>
+    <input type="checkbox" value="secondary school" name="remove" onclick="remove(); queryCheck(this);">secondary school<br>
+    <input type="checkbox" value="college" name="remove" onclick="remove(); queryCheck(this);">college<br>
+    <input type="checkbox" value="university" name="remove" onclick="remove(); queryCheck(this);">university<br>
+    <input type="checkbox" value="library" name="remove" onclick="remove(); queryCheck(this);">library<br>
+    <input type="checkbox" value="train station" name="remove" onclick="queryCheck(this);">train station<br>
+    <input type="checkbox" value="NHS" name="remove" onclick="queryCheck(this);">NHS<br>
+    <input type="checkbox" value="public hospital" name="remove" onclick="remove(); queryCheck(this);">healthcare<br>
+    <input type="checkbox" value="clinics" name="remove" onclick="remove(); queryCheck(this);">clinics<br>
 </form>
 <br>
 </body>
@@ -64,34 +64,37 @@
         var map;
         var infoWindow;
         var service;
-        var markers = [];
+        var markers = {};
         var keyword;
 
         var prova = {};
-        prova.vettore1 = [ 'nome', 'cognome', 'age', 24 ];
+        prova.vettore1 = ['nome', 'cognome', 'age', 24];
         prova.vettore1.push('aaaaaaa');
-        var vettore2 = ['casareccio','prova'];
+        var vettore2 = ['casareccio', 'prova'];
         prova['vettore2'] = vettore2;
-        console.log( prova.vettore2.length );
+        //        console.log( prova.vettore2.length );
 
         function queryCheck(e) {
-                keyword = e.value;
+            keyword = e.value;
             if (e.checked == true) {
+                markers[keyword] = [];
                 performSearch(keyword);
             } else {
+                google.maps.event.clearListeners(map, 'click');
                 remove(keyword);
+                keyword = null;
             }
         }
 
-//        function query(val) {
-//            keyword = val;
-//            performSearch(keyword);
-//        }
+        //        function query(val) {
+        //            keyword = val;
+        //            performSearch(keyword);
+        //        }
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 53.482478, lng: -2.232023},
-                zoom: 13,
+                zoom: 16,
                 styles: [{
                     stylers: [{visibility: 'simplified'}]
                 }, {
@@ -116,7 +119,7 @@
                 keyword: keyword
             };
             service.radarSearch(request, callback);
-
+//            inserts an array into the markers object
         }
 
         function callback(results, status) {
@@ -150,16 +153,21 @@
                     infoWindow.open(map, marker);
                 });
             });
-//            save the markers in the array
-            markers.push(marker);
+//            saves the markers in the array
+            markers[keyword].push(marker);
+
         }
 
-        var remove = function () {
+        var remove = function (keyword) {
 
-            for (var i = 0; i < markers.length; i++) {
-                markers[i].setMap(null);
+            for (var i = 0; i < markers[keyword].length; i++) {
+                markers[keyword][i].setMap(null);
             }
-            markers.length = 0;
+//            markers.keyword.length = 0;
+            markers[keyword] = [];
+//            console.log(keyword+': ');
+//            console.log(markers.keyword);
+//            console.log(markers);
         }
     </script>
 </head>

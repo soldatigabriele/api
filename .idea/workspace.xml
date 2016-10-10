@@ -28,8 +28,8 @@
       <file leaf-file-name="places.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/places.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+            <state relative-caret-position="305">
+              <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -197,12 +197,12 @@
       <workItem from="1475836026960" duration="14694000" />
       <workItem from="1476032411715" duration="230000" />
       <workItem from="1476032735096" duration="146000" />
-      <workItem from="1476089238050" duration="5161000" />
+      <workItem from="1476089238050" duration="7975000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50448000" />
+    <option name="totallyTimeSpent" value="53262000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="23" width="1231" height="777" extended-state="6" />
@@ -472,8 +472,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="171" column="4" selection-start-line="154" selection-start-column="3" selection-end-line="171" selection-end-column="5" />
+        <state relative-caret-position="263">
+          <caret line="87" column="32" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="59" />
           <folding>
             <marker date="1476089502000" expanded="true" signature="21:6481" placeholder="..." />
             <marker date="1476089502000" expanded="true" signature="28:632" placeholder="..." />
@@ -521,8 +521,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/places.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="66" column="24" selection-start-line="66" selection-start-column="24" selection-end-line="66" selection-end-column="24" />
+        <state relative-caret-position="305">
+          <caret line="24" column="28" selection-start-line="24" selection-start-column="28" selection-end-line="24" selection-end-column="28" />
           <folding />
         </state>
       </provider>

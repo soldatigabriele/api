@@ -140,16 +140,15 @@
             map: map,
             position: place.geometry.location,
             icon: {
-                path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-                fillOpacity: 0.8,
-                fillColor:'#0086b3',
-                strokeColor: '#0086b3',
-                strokeWeight: 2,
-                scale: 4
+                url: 'http://maps.gstatic.com/mapfiles/circle.png',
+                anchor: new google.maps.Point(10, 10),
+                scaledSize: new google.maps.Size(10, 17)
+            }
+//            icon: {
 //                url: ico,
 //                anchor: new google.maps.Point(10, 10),
 //                scaledSize: new google.maps.Size(20,20)
-            }
+//            }
         });
 
         google.maps.event.addListener(marker, 'click', function () {

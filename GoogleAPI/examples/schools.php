@@ -1,8 +1,38 @@
+<?php
+
+include '../Classes/DB.php';
+$dbh = DB::getInstance();
+$properties = [];
+if (isset($_POST['age'])) {
+    $age = $_POST['age'];
+
+//    takes the first 2 or 3 letters of the postcode
+    $postcode = str_replace(' ','',$_POST['postcode']);
+    if(strlen($postcode) > 5){
+        $postcode = substr($postcode,0,3);
+    }elseif(strlen($postcode) <= 5){
+        $postcode = substr($postcode,0,2);
+    }
+    $fields = "POSTCODE LIKE '".$postcode." %' AND AGEL < " . $age . " AND AGEH >" . $age;
+    $schools = $dbh->query('schools', $fields);
+    $results = $dbh->results();
+    $count = $dbh->count();
+    for ($i = 0; $i < $count; $i++) {
+        $schools = $results[$i]->TOWN . ', ' . $results[$i]->LOCALITY . ', ' . $results[$i]->POSTCODE . ', age: ' . $results[$i]->AGEL . '-' . $results[$i]->AGEH;
+        $properties[] = $schools;
+    }
+    echo '<pre>';
+    print_r($properties);
+    echo '</pre>';
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Radar Search</title>
+    <title>Schools Search</title>
     <style>
         html, body {
             height: 100%;
@@ -12,8 +42,8 @@
 
         #map {
             height: 100%;
-            width:100%;
-            height:500px;
+            width: 100%;
+            height: 500px;
         }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,29 +54,23 @@
 
 <h4>Google Places</h4>
 <form action="" method="post">
-    <div class="col-md-4">
-        <input type="checkbox" value="primary school" onclick="queryCheck(this);">primary schools<br>
-        <input type="checkbox" value="school" onclick="queryCheck(this);">schools<br>
-        <input type="checkbox" value="college" onclick="queryCheck(this);">college<br>
-        <input type="checkbox" value="university" onclick="queryCheck(this);">university<br>
-    </div>
-    <div class="col-md-4">
-        <input type="checkbox" value="library" onclick="queryCheck(this);">libraries<br>
-        <input type="checkbox" value="supermarket" onclick="queryCheck(this);">supermarkets<br>
-        <input type="checkbox" value="train station" onclick="queryCheck(this);">train stations<br>
-        <input type="checkbox" value="bus station" onclick="queryCheck(this);">bus stations<br>
-    </div>
-    <div class="col-md-4">
-        <input type="checkbox" value="NHS" onclick="queryCheck(this);">NHS<br>
-        <input type="checkbox" value="clinics" onclick="queryCheck(this);">clinics<br>
-        <input type="checkbox" value="fast food" onclick="queryCheck(this);">fast foods<br>
-        <input type="checkbox" value="pub" onclick="queryCheck(this);">pubs<br>
-    </div>
+    <input type="text" name="postcode" value="PR1 3TH">
+    <select name="age">
+        <?php
+        for($i = 2;$i<20;$i++){
+            echo '<option value="'.$i.'"';
+            if($i == 12){echo 'selected="selected"';}
+            echo '>'.$i.'</option>';
+        }
+        ?>
+    </select>
+    <input type="submit">
 </form>
 <br>
-<div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACjsYdnvLjrfMIGq4gqfOlcvMCrocFfIU&callback=initMap&libraries=places,visualization"
-        async defer></script>
+<!--<div id="map"></div>-->
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACjsYdnvLjrfMIGq4gqfOlcvMCrocFfIU&callback=initMap&libraries=places,visualization"
+    async defer></script>
 
 <script>
     var map;

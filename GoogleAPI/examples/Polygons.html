@@ -13,21 +13,25 @@
             margin: 0;
             padding: 0;
         }
-        li{
+
+        li {
             list-style-type: square;
         }
+
         #map {
+            width:900px;
+            max-height:500px;
             height: 100%;
         }
     </style>
 </head>
 <body>
-<form action="../index.php" method="post"> <input type="submit" value="Back"></form><br>
-
-<div id="array" onclick="remove();">remove</div>
-<div id="array2" onclick="initMap();">initMap</div>
+<form action="../index.php" method="post"><input type="submit" value="Back"></form>
 <br>
-<div class="col-md-6" id="map" style="max-width:700px;max-height:400px;"></div>
+
+Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</button>
+<br>
+<div class="col-md-6" id="map"></div>
 <div class="col-md-3">
     <ul id="postcode">
     </ul>
@@ -129,21 +133,24 @@
 
                     var resultOpacity = 1;
 //                Draws the dots over the houses
-                var house = new google.maps.Marker({
-                    position: newLatLng,
-                    map: map,
-                    icon: {
-                        path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                    var house = new google.maps.Marker({
+                        position: newLatLng,
+                        map: map,
+                        icon: {
+//                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+//                        fillColor:'#0086b3',
+//                        strokeColor: '#0086b3',
+//                        strokeWeight: 2,
+//                        scale: 4,
+                            url: 'http://www.clker.com/cliparts/T/W/F/L/n/h/home-png-hi.png',
+                            anchor: new google.maps.Point(10, 10),
+                            scaledSize: new google.maps.Size(20, 20),
                         fillOpacity: resultOpacity,
-                        fillColor:'#0086b3',
-                        strokeColor: '#0086b3',
-                        strokeWeight: 2,
-                        scale: 4,
-                        clickable: false,
-                        zIndex: 1,
-                    }
-                });
-                markers.push(house);
+                            clickable: true,
+                            zIndex: 1,
+                        }
+                    });
+                    markers.push(house);
                 } else {
 //                    var resultOpacity = 0.01;
                 }

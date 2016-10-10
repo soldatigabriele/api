@@ -31,9 +31,9 @@ class DB
         return self::$_instance;
     }
 
-    public function query($table)
+    public function query($table,$fields)
     {
-        $query = "SELECT * FROM {$table}";
+        $query = "SELECT * FROM {$table} WHERE {$fields} ";
         $this->_query = $this->_pdo->prepare($query);
         if ($this->_query->execute()) {
             $this->_results = $this->_query->fetchAll(PDO::FETCH_OBJ);

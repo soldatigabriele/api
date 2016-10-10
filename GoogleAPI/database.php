@@ -4,7 +4,7 @@ include 'Classes/DB.php';
 
 $dbh = DB::getInstance();
 $properties = [];
-$houses = $dbh->query('houses');
+$houses = $dbh->query('houses', '1 = 1');
 $results = $dbh->results();
 $count= $dbh->count();
 for ($i = 0; $i<$count; $i++){

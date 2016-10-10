@@ -5,20 +5,35 @@
     <title>Places</title>
 </head>
 <body>
-<form action="../index.php" method="post"> <input type="submit" value="Back"></form>
+<form action="../index.php" method="post"><input type="submit" value="Back"></form>
 
-<h2>Google Places</h2>
+<!--<h2>Google Places</h2>-->
+<!--<form action="" method="post">-->
+<!--<input type="text" id="search" name="search">-->
+<!--<input type="button" onclick="remove(); query(document.getElementById('search').value);" value="Perform Search"><br><hr>-->
+<!--<input type="radio" value="primary school" name="remove" onclick="remove(); query(this.value);">primary school<br>-->
+<!--<input type="radio" value="secondary school" name="remove" onclick="remove(); query(this.value);">secondary school<br>-->
+<!--<input type="radio" value="college" name="remove" onclick="remove(); query(this.value);">college<br>-->
+<!--<input type="radio" value="university" name="remove" onclick="remove(); query(this.value);">university<br>-->
+<!--<input type="radio" value="library" name="remove" onclick="remove(); query(this.value);">library<br>-->
+<!--<input type="radio" value="train station" name="remove" onclick="remove(); query(this.value);">train station<br>-->
+<!--<input type="radio" value="NHS" name="remove" onclick="remove(); query(this.value);">NHS<br>-->
+<!--<input type="radio" value="public hospital" name="remove" onclick="remove(); query(this.value);">healthcare<br>-->
+<!--<input type="radio" value="clinics" name="remove" onclick="remove(); query(this.value);">clinics<br>-->
+<!--</form>-->
+<!--<input type="text" id="search" name="search">-->
+<!--<input type="button" onclick="remove(); queryCheck(document.getElementById('search').value);" value="Perform Search"><br>-->
 <form action="" method="post">
-    <input type="text" id="search" name="search">
-    <input type="button" onclick="performSearch(document.getElementById('search').value);" value="Perform Search"><br><hr>
-    <input type="radio" value="primary school" name="remove" onclick="remove(); query(this.value);">primary school<br>
-    <input type="radio" value="secondary school" name="remove" onclick="remove(); query(this.value);">secondary school<br>
-    <input type="radio" value="college" name="remove" onclick="remove(); query(this.value);">college<br>
-    <input type="radio" value="university" name="remove" onclick="remove(); query(this.value);">university<br>
-    <input type="radio" value="train station" name="remove" onclick="remove(); query(this.value);">train station<br>
-    <input type="radio" value="NHS" name="remove" onclick="remove(); query(this.value);">NHS<br>
-    <input type="radio" value="public hospital" name="remove" onclick="remove(); query(this.value);">healthcare<br>
-    <input type="radio" value="clinics" name="remove" onclick="remove(); query(this.value);">clinics<br>
+    <!--<hr>-->
+    <!--<input type="checkbox" value="primary school" name="remove" onclick="remove(); queryCheck(this);">primary school<br>-->
+    <!--<input type="checkbox" value="secondary school" name="remove" onclick="remove(); queryCheck(this);">secondary school<br>-->
+    <!--<input type="checkbox" value="college" name="remove" onclick="remove(); queryCheck(this);">college<br>-->
+    <!--<input type="checkbox" value="university" name="remove" onclick="remove(); queryCheck(this);">university<br>-->
+    <!--<input type="checkbox" value="library" name="remove" onclick="remove(); queryCheck(this);">library<br>-->
+    <input type="checkbox" value="train station" name="remove" onclick="remove(); queryCheck(this);">train station<br>
+    <input type="checkbox" value="NHS" name="remove" onclick="remove(); queryCheck(this);">NHS<br>
+    <!--<input type="checkbox" value="public hospital" name="remove" onclick="remove(); queryCheck(this);">healthcare<br>-->
+    <!--<input type="checkbox" value="clinics" name="remove" onclick="remove(); queryCheck(this);">clinics<br>-->
 </form>
 <br>
 </body>
@@ -36,6 +51,7 @@
             margin: 0;
             padding: 0;
         }
+
         #map {
             height: 100%;
         }
@@ -51,20 +67,36 @@
         var markers = [];
         var keyword;
 
-        function query(val){
-            keyword = val;
-            performSearch(keyword);
+        var prova = {};
+        prova.vettore1 = [ 'nome', 'cognome', 'age', 24 ];
+        prova.vettore1.push('aaaaaaa');
+        var vettore2 = ['casareccio','prova'];
+        prova['vettore2'] = vettore2;
+        console.log( prova.vettore2.length );
+
+        function queryCheck(e) {
+                keyword = e.value;
+            if (e.checked == true) {
+                performSearch(keyword);
+            } else {
+                remove(keyword);
+            }
         }
+
+//        function query(val) {
+//            keyword = val;
+//            performSearch(keyword);
+//        }
 
         function initMap() {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: 53.482478, lng: -2.232023},
                 zoom: 13,
                 styles: [{
-                    stylers: [{ visibility: 'simplified' }]
+                    stylers: [{visibility: 'simplified'}]
                 }, {
                     elementType: 'labels',
-                    stylers: [{ visibility: 'off' }]
+                    stylers: [{visibility: 'off'}]
                 }]
             });
 
@@ -77,7 +109,8 @@
         }
 
         function performSearch() {
-            remove();
+//            remove the markers when you move the map
+//            remove();
             var request = {
                 bounds: map.getBounds(),
                 keyword: keyword
@@ -107,8 +140,8 @@
                 }
             });
 
-            google.maps.event.addListener(marker, 'click', function() {
-                service.getDetails(place, function(result, status) {
+            google.maps.event.addListener(marker, 'click', function () {
+                service.getDetails(place, function (result, status) {
                     if (status !== google.maps.places.PlacesServiceStatus.OK) {
                         console.error(status);
                         return;
@@ -122,18 +155,17 @@
         }
 
         var remove = function () {
+
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
             markers.length = 0;
         }
-        function ale(val){
-            alert(val);
-        }
     </script>
 </head>
 <body>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACjsYdnvLjrfMIGq4gqfOlcvMCrocFfIU&callback=initMap&libraries=places,visualization" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACjsYdnvLjrfMIGq4gqfOlcvMCrocFfIU&callback=initMap&libraries=places,visualization"
+        async defer></script>
 </body>
 </html>

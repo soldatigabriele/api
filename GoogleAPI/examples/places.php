@@ -11,9 +11,9 @@
         }
 
         #map {
+            width: 900px;
+            max-height: 500px;
             height: 100%;
-            width: 100%;
-            height: 500px;
         }
     </style>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,25 +24,28 @@
 
 <h4>Google Places</h4>
 <form action="" method="post">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <input type="checkbox" value="primary school" onclick="queryCheck(this);">primary schools<br>
         <input type="checkbox" value="school" onclick="queryCheck(this);">schools<br>
+    </div>
+    <div class="col-md-3">
         <input type="checkbox" value="college" onclick="queryCheck(this);">college<br>
         <input type="checkbox" value="university" onclick="queryCheck(this);">university<br>
-    </div>
-    <div class="col-md-4">
         <input type="checkbox" value="library" onclick="queryCheck(this);">libraries<br>
+    </div>
+    <div class="col-md-3">
         <input type="checkbox" value="supermarket" onclick="queryCheck(this);">supermarkets<br>
-        <input type="checkbox" value="train station" onclick="queryCheck(this);">train stations<br>
+        <input type="checkbox" value="fast food" onclick="queryCheck(this);">fast foods<br>
         <input type="checkbox" value="bus station" onclick="queryCheck(this);">bus stations<br>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
+        <input type="checkbox" value="train station" onclick="queryCheck(this);">train stations<br>
         <input type="checkbox" value="NHS" onclick="queryCheck(this);">NHS<br>
         <input type="checkbox" value="clinics" onclick="queryCheck(this);">clinics<br>
-        <input type="checkbox" value="fast food" onclick="queryCheck(this);">fast foods<br>
-        <input type="checkbox" value="pub" onclick="queryCheck(this);">pubs<br>
+<!--        <input type="checkbox" value="pub" onclick="queryCheck(this);">pubs<br>-->
     </div>
 </form>
+<br>
 <br>
 <div id="map"></div>
 <script
@@ -110,45 +113,51 @@
     }
 
     function addMarker(place) {
-//        var ico;
-//        switch (keyword) {
-//            case 'primary school':
-//            case 'school':
-//            case 'college':
-//            case 'library':
-//            case 'university':
-//                ico = 'https://cdn3.iconfinder.com/data/icons/black-easy/512/538738-school_512x512.png';
-//                break;
-//            case 'supermarket':
-//                ico = 'http://icons.iconarchive.com/icons/custom-icon-design/pretty-office-11/512/shop-icon.png';
-//                break;
-//            case 'train station':
-//                ico = 'https://openclipart.org/image/800px/svg_to_png/248358/train_pictogram.png';
-//                break;
-//            case 'bus station':
-//                ico = 'http://www.clker.com/cliparts/6/N/5/z/E/y/bus-stop-sign-blue-md.png';
-//                break;
-//            case: 'NHS':
-//                ico = 'https://usilive.org/wp-content/uploads/2015/01/NHS-logo.png';
-//                ico = 'http://www.clker.com/cliparts/6/N/5/z/E/y/bus-stop-sign-blue-md.png';
-//                break;
-//            default:
-//                ico = 'http://maps.gstatic.com/mapfiles/circle.png';
-//                break;
-//        }
+        var ico;
+        switch (keyword) {
+            case 'primary school':
+            case 'school':
+            case 'college':
+            case 'library':
+            case 'university':
+                ico = '../img/school.png';
+                break;
+            case 'supermarket':
+                ico = '../img/shop.png';
+                break;
+            case 'train station':
+                ico = '../img/train.png';
+                break;
+            case 'bus station':
+                ico = '../img/bus.png';
+                break;
+            case 'NHS':
+            case 'clinics':
+                ico = '../img/nhs.png';
+                break;
+            case 'fast food':
+                ico = '../img/fastfood.png';
+                break;
+            case 'pub':
+                ico = '../img/pub.png';
+                break;
+            default:
+                ico = 'http://maps.gstatic.com/mapfiles/circle.png';
+                break;
+        }
         var marker = new google.maps.Marker({
             map: map,
             position: place.geometry.location,
-            icon: {
-                url: 'http://maps.gstatic.com/mapfiles/circle.png',
-                anchor: new google.maps.Point(10, 10),
-                scaledSize: new google.maps.Size(10, 17)
-            }
 //            icon: {
-//                url: ico,
+//                url: 'http://maps.gstatic.com/mapfiles/circle.png',
 //                anchor: new google.maps.Point(10, 10),
-//                scaledSize: new google.maps.Size(20,20)
+//                scaledSize: new google.maps.Size(10, 17)
 //            }
+            icon: {
+                url: ico,
+                anchor: new google.maps.Point(10, 10),
+                scaledSize: new google.maps.Size(30,30)
+            }
         });
 
         google.maps.event.addListener(marker, 'click', function () {

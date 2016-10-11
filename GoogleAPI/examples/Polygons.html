@@ -6,18 +6,15 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
     <style>
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
         }
-
         li {
-            list-style-type: square;
+            list-style-type: decimal;
         }
-
         #map {
             width: 900px;
             max-height: 500px;
@@ -72,7 +69,7 @@ Reset the map:
                 strokeWeight: sWeight,
                 strokeColor: sColor,
                 clickable: false,
-                editable: true,
+                editable: false,
                 zIndex: 1
             },
             polygonOptions: {
@@ -91,6 +88,7 @@ Reset the map:
 
 // launch this function when a shape is drawn
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
+
 //            google.maps.event.clearListeners(map, 'click');
             var personalShape;
             remove('ms');
@@ -106,10 +104,18 @@ Reset the map:
                     personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
                 }
                 personalShape = new google.maps.Polygon({paths: personalVertices});
+
+// adds an event listener to check if the shape has been edited and updates the results
+                google.maps.event.addListener(event.overlay.getPath(), 'insert_at', function () {
+                    updateResults(event.overlay);
+                });
+                google.maps.event.addListener(event.overlay.getPath(), 'set_at', function () {
+                    updateResults(event.overlay);
+                });
             }
 
             if (event.type == 'circle') {
-//              calculates the position of the circle
+// calculates the position of the circle
                 var numPts = 512;
                 var path = [];
                 var center = event.overlay.getCenter();
@@ -117,75 +123,48 @@ Reset the map:
                 for (var i = 0; i < numPts; i++) {
                     path.push(google.maps.geometry.spherical.computeOffset(center, radius, i * 360 / numPts));
                 }
-//              creates a new shape from the center of the circle and his radius
+// creates a new shape from the center of the circle and his radius
                 personalShape = new google.maps.Polygon({paths: path});
 
             }
 
-
-            google.maps.event.addListener(event.overlay.getPath(), 'insert_at', function () {
-                console.log("insert_at...");
-            });
-
-            google.maps.event.addListener(event.overlay.getPath(), 'set_at', function () {
+            function updateResults(shape) {
                 remove('m');
-                var vertices = event.overlay.getPath();
+                var vertices = shape.getPath();
                 for (var i = 0; i < vertices.getLength(); i++) {
                     var xy = vertices.getAt(i);
                     personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
                 }
                 personalShape = new google.maps.Polygon({paths: personalVertices});
                 dots(personalShape);
-            });
+            }
 
-//                console.log(shapes[0]);
-//                console.log(event.overlay);
-
-//            google.maps.event.addListener(event.overlay, 'click', function () {
-//                remove();
-//                });
-//            });
-//            event.overlay.addListener('click', function () {
-//                console.log('clicked');
-//            });
-//            google.maps.event.addListener(event.overlay.getPath(), 'dragend', function () {
-//            shapes[0].addListener('dragend', function () {
-//                console.log('shapes 0 dragged');
-//            });
-
-//                calls the function to check if the houses are inside the shape
+// calls the function to check if the houses are inside the shape
             dots(personalShape);
-
-
         });
 
-//        console.log(shapes[0]);
-//        google.maps.event.addListener(shapes[0], 'click', function () {
-//            console.log('test');
-//        });
 
-
-//      draws the marker over the house
+// draws the marker over the house
         function dots(shape) {
-//      foreach house in the array
+// foreach house in the array
             for (var i = 0; i < properties.length; i++) {
 //                console.log(properties[i].split(',')[0]);
 //                console.log(properties[i].split(',')[1]);
 
-//                create the coordinates object
+// create the coordinates object
                 var newLatLng = new google.maps.LatLng(properties[i].split(',')[0], properties[i].split(',')[1]);
 //                var resultOpacity = google.maps.geometry.poly.containsLocation(newLatLng, shape) ? 1 : 0.01;
+                var house;
                 if (google.maps.geometry.poly.containsLocation(newLatLng, shape)) {
-//                    write the postcode of the visible houses
+// writes the postcode of the visible houses
                     document.getElementById("postcode").appendChild
                     var node = document.createElement('li');
                     var postcode = document.createTextNode(properties[i].split(',')[2]);
                     node.appendChild(postcode);
                     document.getElementById("postcode").appendChild(node);
 
-                    var resultOpacity = 1;
-//                Draws the dots over the houses
-                    var house = new google.maps.Marker({
+// Draws the dots over the houses
+                    house = new google.maps.Marker({
                         position: newLatLng,
                         map: map,
                         icon: {
@@ -194,38 +173,46 @@ Reset the map:
 //                        strokeColor: '#0086b3',
 //                        strokeWeight: 2,
 //                        scale: 4,
-                            url: 'http://www.clker.com/cliparts/T/W/F/L/n/h/home-png-hi.png',
+                            url: '../img/house2.png',
                             anchor: new google.maps.Point(10, 10),
                             scaledSize: new google.maps.Size(20, 20),
-                            fillOpacity: resultOpacity,
                             clickable: true,
                             zIndex: 1,
                         }
                     });
                     markers.push(house);
                 } else {
-//                    var resultOpacity = 0.01;
+                    house = new google.maps.Marker({
+                        position: newLatLng,
+                        map: map,
+                        icon: {
+                            url: '../img/house1.png',
+                            anchor: new google.maps.Point(10, 10),
+                            scaledSize: new google.maps.Size(20, 20),
+                            clickable: true,
+                            zIndex: 1,
+                        }
+                    });
+                    markers.push(house);
                 }
             }
-
         }
     }
-
     var remove = function (elem) {
-        if(elem[0] == 'm') {
+        if (elem[0] == 'm') {
             for (var i = 0; i < markers.length; i++) {
                 markers[i].setMap(null);
             }
             markers.length = 0;
         }
 
-        if(elem[1] == 's') {
+        if (elem[1] == 's') {
             for (var i = 0; i < shapes.length; i++) {
                 shapes[i].setMap(null);
             }
             shapes.length = 0;
         }
-//        remove the postcodes from the list
+// removes the postcodes from the list
         var pc = document.getElementById('postcode');
         while (pc.firstChild) {
             pc.removeChild(pc.firstChild);
@@ -233,12 +220,10 @@ Reset the map:
 
     }
 
-
-    //jquery db function
+// JQUERY DB Function
     $(document).ready(function () {
         properties = new Array();
-//retrieve the data from the database
-//        $("#check").click(function () {
+// retrieves the data from the database
         $.ajax({
             url: "../database.php",
             type: "POST",
@@ -247,8 +232,6 @@ Reset the map:
             },
             dataType: "json"
         });
-
-//        });
     });
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeigJ0MtRTk-X-plGt4BDf_1QiSCMh91Q&libraries=drawing&callback=initMap"

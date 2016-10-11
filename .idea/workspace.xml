@@ -34,8 +34,8 @@
       <file leaf-file-name="Polygons.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
+            <state relative-caret-position="242">
+              <caret line="130" column="26" selection-start-line="130" selection-start-column="26" selection-end-line="130" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -250,12 +250,12 @@
       <updated>1475675163315</updated>
       <workItem from="1475675165454" duration="30217000" />
       <workItem from="1476116625548" duration="217000" />
-      <workItem from="1476175971796" duration="1896000" />
+      <workItem from="1476175971796" duration="5851000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="44912000" />
+    <option name="totallyTimeSpent" value="48867000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="777" extended-state="6" />
@@ -297,7 +297,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html</url>
-          <line>210</line>
+          <line>248</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -506,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
+        <state relative-caret-position="242">
+          <caret line="130" column="26" selection-start-line="130" selection-start-column="26" selection-end-line="130" selection-end-column="26" />
           <folding />
         </state>
       </provider>

@@ -30,9 +30,10 @@
 <br>
 
 Reset the map:
-<button id="array2" onclick="remove(); initMap();">initMap</button>
+<button id="array2" onclick="remove('ms'); initMap();">initMap</button>
 <br>
 <div class="col-md-6" id="map"></div>
+<button id="test" value="test" name="test">test</button>
 <div class="col-md-3">
     <ul id="postcode">
     </ul>
@@ -90,9 +91,9 @@ Reset the map:
 
 // launch this function when a shape is drawn
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
-            google.maps.event.clearListeners(map, 'click');
+//            google.maps.event.clearListeners(map, 'click');
             var personalShape;
-            remove();
+            remove('ms');
             shapes.push(event.overlay);
 
             if (event.type == 'polygon') {
@@ -120,14 +121,48 @@ Reset the map:
                 personalShape = new google.maps.Polygon({paths: path});
 
             }
-            console.log(personalShape);
 
+
+            google.maps.event.addListener(event.overlay.getPath(), 'insert_at', function () {
+                console.log("insert_at...");
+            });
+
+            google.maps.event.addListener(event.overlay.getPath(), 'set_at', function () {
+                remove('m');
+                var vertices = event.overlay.getPath();
+                for (var i = 0; i < vertices.getLength(); i++) {
+                    var xy = vertices.getAt(i);
+                    personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
+                }
+                personalShape = new google.maps.Polygon({paths: personalVertices});
+                dots(personalShape);
+            });
+
+//                console.log(shapes[0]);
+//                console.log(event.overlay);
+
+//            google.maps.event.addListener(event.overlay, 'click', function () {
+//                remove();
+//                });
+//            });
+//            event.overlay.addListener('click', function () {
+//                console.log('clicked');
+//            });
+//            google.maps.event.addListener(event.overlay.getPath(), 'dragend', function () {
+//            shapes[0].addListener('dragend', function () {
+//                console.log('shapes 0 dragged');
+//            });
 
 //                calls the function to check if the houses are inside the shape
             dots(personalShape);
 
+
         });
 
+//        console.log(shapes[0]);
+//        google.maps.event.addListener(shapes[0], 'click', function () {
+//            console.log('test');
+//        });
 
 
 //      draws the marker over the house
@@ -176,17 +211,20 @@ Reset the map:
         }
     }
 
-    var remove = function () {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
+    var remove = function (elem) {
+        if(elem[0] == 'm') {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers.length = 0;
         }
 
-        for (var i = 0; i < shapes.length; i++) {
-            shapes[i].setMap(null);
+        if(elem[1] == 's') {
+            for (var i = 0; i < shapes.length; i++) {
+                shapes[i].setMap(null);
+            }
+            shapes.length = 0;
         }
-        markers.length = 0;
-        shapes.length = 0;
-//        console.clear();
 //        remove the postcodes from the list
         var pc = document.getElementById('postcode');
         while (pc.firstChild) {

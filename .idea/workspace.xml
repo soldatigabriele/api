@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4a315350-9a5d-4526-bc42-3e924ec10502" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GoogleAPI/examples/JavascriptMap.php" afterPath="$PROJECT_DIR$/GoogleAPI/examples/JavascriptMap.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GoogleAPI/examples/Polygons.html" afterPath="$PROJECT_DIR$/GoogleAPI/examples/Polygons.html" />
     </list>
     <ignored path="22group.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +34,8 @@
       <file leaf-file-name="Polygons.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-967">
-              <caret line="60" column="37" selection-start-line="60" selection-start-column="37" selection-end-line="60" selection-end-column="37" />
+            <state relative-caret-position="356">
+              <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -69,13 +68,13 @@
         <option value="$PROJECT_DIR$/GoogleAPI/examples/schools.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/database.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/Classes/DB.php" />
-        <option value="$PROJECT_DIR$/GoogleAPI/examples/Polygons.html" />
         <option value="$PROJECT_DIR$/GoogleAPI/examples/places.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/examples/JavascriptMap.html" />
         <option value="$PROJECT_DIR$/GoogleAPI/Classes/moveMap.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/moveMap.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/examples/JavascriptMap.php" />
         <option value="$PROJECT_DIR$/GoogleAPI/index.php" />
+        <option value="$PROJECT_DIR$/GoogleAPI/examples/Polygons.html" />
       </list>
     </option>
   </component>
@@ -89,9 +88,8 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="49" />
     <option name="y" value="23" />
-    <option name="width" value="1231" />
+    <option name="width" value="1280" />
     <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -252,19 +250,19 @@
       <updated>1475675163315</updated>
       <workItem from="1475675165454" duration="30217000" />
       <workItem from="1476116625548" duration="217000" />
-      <workItem from="1476175971796" duration="37000" />
+      <workItem from="1476175971796" duration="1896000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43053000" />
+    <option name="totallyTimeSpent" value="44912000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="23" width="1231" height="777" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14703493" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14140625" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32981315" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -299,7 +297,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html</url>
-          <line>193</line>
+          <line>210</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
@@ -508,8 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/GoogleAPI/examples/Polygons.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-967">
-          <caret line="60" column="37" selection-start-line="60" selection-start-column="37" selection-end-line="60" selection-end-column="37" />
+        <state relative-caret-position="356">
+          <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
           <folding />
         </state>
       </provider>

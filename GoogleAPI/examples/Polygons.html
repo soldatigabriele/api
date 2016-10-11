@@ -19,8 +19,8 @@
         }
 
         #map {
-            width:900px;
-            max-height:500px;
+            width: 900px;
+            max-height: 500px;
             height: 100%;
         }
     </style>
@@ -29,7 +29,8 @@
 <form action="../index.php" method="post"><input type="submit" value="Back"></form>
 <br>
 
-Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</button>
+Reset the map:
+<button id="array2" onclick="remove(); initMap();">initMap</button>
 <br>
 <div class="col-md-6" id="map"></div>
 <div class="col-md-3">
@@ -62,7 +63,7 @@ Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</butto
             drawingControl: true,
             drawingControlOptions: {
                 position: google.maps.ControlPosition.TOP_CENTER,
-                drawingModes: ['polygon']
+                drawingModes: ['polygon', 'circle']
             },
             circleOptions: {
                 fillColor: fColor,
@@ -70,7 +71,7 @@ Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</butto
                 strokeWeight: sWeight,
                 strokeColor: sColor,
                 clickable: false,
-                editable: false,
+                editable: true,
                 zIndex: 1
             },
             polygonOptions: {
@@ -79,7 +80,7 @@ Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</butto
                 fillOpacity: fOpacity,
                 strokeWeight: sWeight,
                 clickable: false,
-                editable: false,
+                editable: true,
                 zIndex: 0,
             },
 
@@ -90,32 +91,48 @@ Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</butto
 // launch this function when a shape is drawn
         google.maps.event.addListener(drawingManager, 'overlaycomplete', function (event) {
             google.maps.event.clearListeners(map, 'click');
-
+            var personalShape;
             remove();
+            shapes.push(event.overlay);
 
             if (event.type == 'polygon') {
 //              Remove all the previous markers and shapes
 //              Add the shape to the array
-                shapes.push(event.overlay);
 
                 var vertices = event.overlay.getPath();
                 for (var i = 0; i < vertices.getLength(); i++) {
                     var xy = vertices.getAt(i);
                     personalVertices[i] = {'lat': xy.lat(), 'lng': xy.lng()};
                 }
-
-
-//                CALL THE FUNCTION TO CHECK IF DOTS ARE INSIDE THE VERTICES
-                var personalShape = new google.maps.Polygon({paths: personalVertices});
-                dots(personalShape);
+                personalShape = new google.maps.Polygon({paths: personalVertices});
             }
+
+            if (event.type == 'circle') {
+//              calculates the position of the circle
+                var numPts = 512;
+                var path = [];
+                var center = event.overlay.getCenter();
+                var radius = event.overlay.getRadius();
+                for (var i = 0; i < numPts; i++) {
+                    path.push(google.maps.geometry.spherical.computeOffset(center, radius, i * 360 / numPts));
+                }
+//              creates a new shape from the center of the circle and his radius
+                personalShape = new google.maps.Polygon({paths: path});
+
+            }
+            console.log(personalShape);
+
+
+//                calls the function to check if the houses are inside the shape
+            dots(personalShape);
+
         });
 
-//        draw the marker over the house
 
 
+//      draws the marker over the house
         function dots(shape) {
-//foreach house in the array
+//      foreach house in the array
             for (var i = 0; i < properties.length; i++) {
 //                console.log(properties[i].split(',')[0]);
 //                console.log(properties[i].split(',')[1]);
@@ -145,7 +162,7 @@ Reset the map: <button id="array2" onclick="remove(); initMap();">initMap</butto
                             url: 'http://www.clker.com/cliparts/T/W/F/L/n/h/home-png-hi.png',
                             anchor: new google.maps.Point(10, 10),
                             scaledSize: new google.maps.Size(20, 20),
-                        fillOpacity: resultOpacity,
+                            fillOpacity: resultOpacity,
                             clickable: true,
                             zIndex: 1,
                         }

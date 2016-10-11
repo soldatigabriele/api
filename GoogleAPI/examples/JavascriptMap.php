@@ -1,22 +1,3 @@
-<?php
-
-include_once '../Classes/Curl.php';
-use connect as Curl;
-
-//if (isset($_POST['address'])) {
-//    $coordinates = '';
-//    $key = 'AIzaSyC3LjkARjbGJoXw6VdKVVIG8_nYTbtY37s';
-//    $address = trim(str_replace(' ', '+', $_POST['address']));
-//    $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address . '&key=' . $key;
-//    $curl = new Curl\Curl($url);
-//    $results = $curl->returnResults();
-//    $lat = $results['results'][0]['geometry']['location']['lat'];
-//    $lng = $results['results'][0]['geometry']['location']['lng'];
-//    echo '<script>alert(' . $lat . ',' . $lng . ');</script>';
-//    echo '<script>updateCoordinats(23.123213,-54.1231);</script>';
-//}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +37,6 @@ use connect as Curl;
     var long = 150.623;
 
     function updateCoordinats(lat, lng) {
-//        alert('updateCoordinates');
         lati = lat;
         long = lng;
         initMap();
@@ -65,8 +45,7 @@ use connect as Curl;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: lati, lng: long},
-
-            zoom: 7
+            zoom: 16
         });
     }
 
